@@ -19,9 +19,32 @@ const createArticle = (req, res) => {
     })
 }
 
-const editArticle = (req, res) => {
-    return res.status(200).json({ message: 'patch'});
-}
+const editArticle = async (req, res) => {
+  try {
+    const [updated] = await models.Article.update(
+      {
+        name: req.body.name,
+        slug: req.body.slug,
+        image: req.body.image,
+        body: req.body.body,
+        author_id: req.body.author_id,
+        published: new Date()
+      },
+      {
+        where: { id: req.params.id }
+      }
+    );
+
+    if (!updated) {
+      return res.status(404).json({ message: 'Article not found' });
+    }
+
+    return res.status(200).json({ message: 'Article updated.' });
+
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
 
 const getArticle = async (req, res) => {
   try {
