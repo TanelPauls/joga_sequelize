@@ -1,14 +1,3 @@
-const Sequelize = require("sequelize");
-const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  {
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    dialect: "mysql"
-  }
-);
 const models = require('../../models');
 
 const createArticle = (req, res) => {
@@ -30,4 +19,33 @@ const createArticle = (req, res) => {
     })
 }
 
-module.exports = {createArticle};
+const editArticle = (req, res) => {
+    return res.status(200).json({ message: 'patch'});
+}
+
+const getArticle = async (req, res) => {
+  try {
+    const [article, authors] = await Promise.all([
+      models.Article.findByPk(req.params.id),
+      models.Authors.findAll()
+    ]);
+
+    if (!article) {
+      return res.status(404).json({ message: 'Article not found' });
+    }
+
+    if(!authors) {
+        return res.status(404).json({ message: 'Authors not found' });
+    }
+
+    return res.status(200).json({
+      article,
+      authors
+    });
+
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
+module.exports = {createArticle, editArticle, getArticle};
