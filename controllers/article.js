@@ -20,4 +20,16 @@ const getAllArticles = (req, res) => {
     })
 }
 
-module.exports = {getAllArticles};
+const getArticleBySlug = (req, res) => {
+  Article.findOne({
+    where: {
+      slug: req.params.slug
+    }
+  }).then(article => {
+    return res.status(200).json({article})
+  }).catch(error=> {
+    return res.status(500).send(error.message);
+  })
+}
+
+module.exports = {getAllArticles, getArticleBySlug};
