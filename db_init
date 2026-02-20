@@ -11,3 +11,13 @@ npx sequelize-cli db:migrate
 npx sequelize-cli migration:create --name modify_article_fields
 npx sequelize-cli seed:generate --name demo-articles
 npx sequelize-cli db:seed:all
+npx sequelize-cli model:generate --name Authors --attributes id:integer,name:string
+npx sequelize-cli db:migrate
+npx sequelize-cli migration:create --name modify_author_fields
+npx sequelize-cli seed:generate --name demo-authors
+npx sequelize-cli db:seed:all
+
+npx sequelize-cli db:drop
+npx sequelize-cli db:create
+npx sequelize-cli db:migrate
+npx sequelize-cli db:seed:all
