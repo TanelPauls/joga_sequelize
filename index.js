@@ -2,10 +2,11 @@ require("dotenv").config();
 
 const express = require('express');
 const app = express();
+
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const Sequelize = require("sequelize");
-
 const sequelize = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
@@ -21,8 +22,9 @@ sequelize.authenticate().then(() => {console.log('Connected to the database.');}
     console.error('Unable to connect to database', err);
 })
 
+const articleRouter = require('./routes/article.js');
 
-app.use('/', (req, res) => {res.json({ message: "Welcome to sequelize application"})});
+app.use('/', articleRouter);
 
 app.listen(6013, "0.0.0.0", ()=>{
     console.log('App is started at http://localhost:6013')
