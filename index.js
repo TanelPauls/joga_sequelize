@@ -28,6 +28,7 @@ const authorRouter = require('./routes/author.js')
 app.use('/', articleRouter);
 app.use('/article', articleRouter);
 app.use('/author', authorRouter);
+app.use('admin/article', articleRouter);
 
 app.listen(6013, "0.0.0.0", ()=>{
     console.log('App is started at http://localhost:6013')
