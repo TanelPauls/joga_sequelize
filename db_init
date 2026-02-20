@@ -21,3 +21,9 @@ npx sequelize-cli db:drop
 npx sequelize-cli db:create
 npx sequelize-cli db:migrate
 npx sequelize-cli db:seed:all
+
+npx sequelize-cli model:generate --name Tags --attributes id:integer,name:string
+npx sequelize-cli seed:generate --name demo-tags
+
+npx sequelize-cli model:generate --name ArticleTags --attributes articleId:integer,tagId:integer
+npx sequelize-cli seed:generate --name demo-articleTags
