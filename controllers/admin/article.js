@@ -71,4 +71,19 @@ const getArticle = async (req, res) => {
   }
 };
 
-module.exports = {createArticle, editArticle, getArticle};
+const deleteArticle = async (req, res) => {
+  try {
+    const article = await models.Article.findByPk(req.params.id);
+
+      if (!article) {
+        return res.status(404).json({ message: 'Article not found' });
+      }
+
+      await article.destroy();
+      return res.status(200).json({message: "Article deleted."})
+  } catch (error) {
+    return res.status(200).json({message: "yes"});
+  }
+}
+
+module.exports = {createArticle, editArticle, getArticle, deleteArticle};

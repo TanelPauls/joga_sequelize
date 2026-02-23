@@ -9,5 +9,6 @@ router.get('/article/:slug', articleController.getArticleBySlug);
 router.post('/admin/article/create', articleAdminController.createArticle);
 router.get('/admin/article/edit/:id', articleAdminController.getArticle);
 router.patch('/admin/article/edit/:id', articleAdminController.editArticle);
+router.post('/admin/article/delete/:id', articleAdminController.deleteArticle);
 
 module.exports = router;
